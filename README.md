@@ -1,7 +1,7 @@
 AndroidPullToRefresh
 ====================
 
-[![ScreenShot](http://img.youtube.com/vi/-TFE6RZwnA4/0.jpg)](//www.youtube.com/embed/-TFE6RZwnA4?rel=0)
+<a href="http://www.youtube.com/embed/-TFE6RZwnA4?rel=0" target="_blank">[![ScreenShot](http://img.youtube.com/vi/-TFE6RZwnA4/0.jpg)]</a>
 
 
 Keyframe animated pull to refresh, easy to extend your own PullToRefreshAnimation.
