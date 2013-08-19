@@ -85,7 +85,6 @@ public abstract class PullToRefreshAnimation {
         mTotalDistance = 0;
         if (mAnimationCallback.getFirstVisiblePosition() == 0) {
             mPreviousY = event.getY();
-            intercept = true;
         } else {
             mPreviousY = -1;
         }
@@ -118,7 +117,7 @@ public abstract class PullToRefreshAnimation {
             if (newTotalDistance != mTotalDistance) {
 
                 mRefreshStarted = true;
-                if (getAnimationStart() <= mTotalDistance) {
+                if (mTotalDistance <= getAnimationStart()) {
                     mTotalDistance += (y - mPreviousY) * (4.2/mDensityFactor);
                 } else {
                     mTotalDistance = newTotalDistance;
@@ -127,9 +126,7 @@ public abstract class PullToRefreshAnimation {
                 if (mTotalDistance <= getAnimationEndHeight() + getMarginStart()) {
                     setMarginForAnimationView((int) (mTotalDistance - getAnimationEndHeight()));
                 }
-                if (mTotalDistance - getAnimationEndHeight() < 0) {
-                    mRefreshStarted = false;
-                }
+
                 Log.d("PULLTOREFRESH", "TOTAL: " + mTotalDistance);
                 if (mTotalDistance <= getAnimationEndHeight()) {
                     float range = (getAnimationEndHeight() - getAnimationStart() - getMarginStart())

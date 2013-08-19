@@ -1,6 +1,7 @@
 package au.com.jtribe.pulltorefreshlib;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ListAdapter;
@@ -89,15 +90,26 @@ public class ListViewPlus extends ListView implements PullToRefreshAnimationCall
     }
 
     public void resetPullToRefresh() {
-        mPullToRefreshAnimation.resetHeader();
+        if (mPullToRefreshAnimation != null)
+            mPullToRefreshAnimation.resetHeader();
 
     }
 
     public void onRefreshComplete() {
-        mPullToRefreshAnimation.refreshComplete();
+        if (mPullToRefreshAnimation != null)
+            mPullToRefreshAnimation.refreshComplete();
     }
 
     public interface RefreshCallbacks {
         void onRefresh();
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        try {
+            super.dispatchDraw(canvas);
+        } catch (IndexOutOfBoundsException e) {
+            // samsung error
+        }
     }
 }
