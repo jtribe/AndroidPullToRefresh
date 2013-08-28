@@ -32,6 +32,7 @@ public abstract class PullToRefreshAnimation {
     private float mTotalDistance;
     private float mPreviousY;
     private float mScrollStartY;
+	private float mPreviousX;
 
     protected abstract void loadAnimation();
 
@@ -85,6 +86,7 @@ public abstract class PullToRefreshAnimation {
         mTotalDistance = 0;
         if (mAnimationCallback.getFirstVisiblePosition() == 0) {
             mPreviousY = event.getY();
+            mPreviousX = event.getX();
         } else {
             mPreviousY = -1;
         }
@@ -94,9 +96,11 @@ public abstract class PullToRefreshAnimation {
     }
 
     public boolean onMoveIntercept(MotionEvent event) {
+    	float yMovment = event.getY() - mPreviousY;
+    	float xMovment = event.getX() - mPreviousX;
         if ((mPreviousY != -1
-                && mAnimationCallback.getFirstVisiblePosition() == 0
-                && event.getY() - mScrollStartY > IDLE_DISTANCE)) {
+                && mAnimationCallback.getFirstVisiblePosition() == 0 &&
+                		event.getY() - mScrollStartY > IDLE_DISTANCE) && Math.abs(yMovment) > Math.abs(xMovment)) {
             return true; // intercept this so we can do the animation
         }
         return false;
