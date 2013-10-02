@@ -32,5 +32,7 @@ local.properties
 *~
 *.swp
 
+.settings
+
 PullToRefresh/build
 PullToRefreshLibrary/build
