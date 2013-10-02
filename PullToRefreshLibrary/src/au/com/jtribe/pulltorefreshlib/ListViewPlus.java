@@ -17,7 +17,6 @@ public class ListViewPlus extends ListView implements PullToRefreshAnimationCall
 
     @Override
     public void onLoaded() {
-        // TODO what todo?
     }
 
     public ListViewPlus(Context context) {

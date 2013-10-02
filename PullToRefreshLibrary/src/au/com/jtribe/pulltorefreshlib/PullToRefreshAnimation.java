@@ -2,7 +2,6 @@ package au.com.jtribe.pulltorefreshlib;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,8 +13,8 @@ import android.widget.ImageView;
  * Created by tosa on 8/14/13.
  */
 public abstract class PullToRefreshAnimation {
-
-    private static final int IDLE_DISTANCE = 5;
+	
+	private static final int IDLE_DISTANCE = 5;
     private static final float PULL_RESISTANCE = 1.1f;
 
     protected final ImageView mAnimationView;
@@ -130,8 +129,6 @@ public abstract class PullToRefreshAnimation {
                 if (mTotalDistance <= getAnimationEndHeight() + getMarginStart()) {
                     setMarginForAnimationView((int) (mTotalDistance - getAnimationEndHeight()));
                 }
-
-                Log.d("PULLTOREFRESH", "TOTAL: " + mTotalDistance);
                 if (mTotalDistance <= getAnimationEndHeight()) {
                     float range = (getAnimationEndHeight() - getAnimationStart() - getMarginStart())
                             / getAnimationFrames();
@@ -175,6 +172,8 @@ public abstract class PullToRefreshAnimation {
                 case PULL_TO_REFRESH:
                     animateBackAndReset();
                     break;
+			default:
+				break;
             }
         }
         if (mRefreshStarted) {
@@ -193,9 +192,4 @@ public abstract class PullToRefreshAnimation {
         state = State.PULL_TO_REFRESH;
         resetHeader();
     }
-
-    private static enum State {
-        PULL_TO_REFRESH, RELEASE_TO_REFRESH, REFRESHING
-    }
-
 }
