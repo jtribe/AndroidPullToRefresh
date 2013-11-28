@@ -127,7 +127,7 @@ public abstract class PullToRefreshAnimation {
                 }
 
                 if (mTotalDistance <= getAnimationEndHeight() + getMarginStart()) {
-                    setMarginForAnimationView((int) (mTotalDistance - getAnimationEndHeight()));
+                    setMarginForAnimationView((int) (mTotalDistance - getAnimationHeight()));
                 }
                 if (mTotalDistance <= getAnimationEndHeight()) {
                     float range = (getAnimationEndHeight() - getAnimationStart() - getMarginStart())
