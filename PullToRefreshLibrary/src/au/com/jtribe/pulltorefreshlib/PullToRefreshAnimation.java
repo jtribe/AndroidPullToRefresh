@@ -160,7 +160,7 @@ public abstract class PullToRefreshAnimation {
     }
 
     public boolean onUp(MotionEvent event) {
-        boolean intercept = false;
+
         if (mPreviousY != -1
                 && (state == State.RELEASE_TO_REFRESH || (mAnimationCallback.getFirstVisiblePosition() == 0))) {
             switch (state) {
@@ -178,9 +178,8 @@ public abstract class PullToRefreshAnimation {
         }
         if (mRefreshStarted) {
             mRefreshStarted = false;
-            intercept = true;
         }
-        return intercept;
+        return false;
     }
 
     public boolean onCancel(MotionEvent event) {
