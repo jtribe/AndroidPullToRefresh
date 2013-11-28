@@ -99,10 +99,6 @@ public class ListViewPlus extends ListView implements PullToRefreshAnimationCall
             mPullToRefreshAnimation.refreshComplete();
     }
 
-    public interface RefreshCallbacks {
-        void onRefresh();
-    }
-
     @Override
     protected void dispatchDraw(Canvas canvas) {
         try {
