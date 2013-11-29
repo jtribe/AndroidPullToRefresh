@@ -176,6 +176,7 @@ public abstract class PullToRefreshAnimation {
         }
         if (mRefreshStarted) {
             mRefreshStarted = false;
+            return true;
         }
         return false;
     }
