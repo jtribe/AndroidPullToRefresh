@@ -120,20 +120,18 @@ public abstract class PullToRefreshAnimation {
             if (newTotalDistance != mTotalDistance) {
 
                 mRefreshStarted = true;
-                if (mTotalDistance <= getAnimationStart()) {
-                    mTotalDistance += (y - mPreviousY) * (4.2/mDensityFactor);
-                } else {
                     mTotalDistance = newTotalDistance;
-                }
 
-                if (mTotalDistance <= getAnimationEndHeight() + getMarginStart()) {
+                if (mTotalDistance <= getAnimationEndHeight()) {
                     setMarginForAnimationView((int) (mTotalDistance - getAnimationHeight()));
                 }
-                if (mTotalDistance <= getAnimationEndHeight()) {
-                    float range = (getAnimationEndHeight() - getAnimationStart() - getMarginStart())
+                if (mTotalDistance <= getAnimationEndHeight() + getMarginStart()) {
+
+                    float distanceToAnimateIn = getAnimationEndHeight() - getAnimationHeight();
+                    float range = distanceToAnimateIn
                             / getAnimationFrames();
 
-                    int image_index = (int) ((mTotalDistance - getAnimationStart() - getMarginStart()) / range);
+                    int image_index = (int) ((mTotalDistance - distanceToAnimateIn) / range);
                     int chosen_index = image_index;
 
                     if (image_index >= 0

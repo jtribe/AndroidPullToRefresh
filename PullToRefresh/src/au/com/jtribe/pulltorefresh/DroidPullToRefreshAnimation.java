@@ -31,11 +31,11 @@ public class DroidPullToRefreshAnimation extends PullToRefreshAnimation {
     public DroidPullToRefreshAnimation(Context context, int layoutId, int animationViewId, int offset, PullToRefreshCallback callback) {
         super(context, layoutId, animationViewId, offset, callback);
         Resources r = context.getResources();
-        mAnimHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 162,
-                r.getDisplayMetrics());
+        mAnimHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 158,
+                r.getDisplayMetrics()); // animation image height at the start
         mAnimHeightEnd = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                270, r.getDisplayMetrics());
-        mAnimStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 109,
+                266, r.getDisplayMetrics()); //
+        mAnimStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 107,
                 r.getDisplayMetrics());
         mMarginStart = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 110,
                 r.getDisplayMetrics()) + offset;
