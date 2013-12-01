@@ -8,7 +8,7 @@ It was important to use to navigate back and forth through they keyframes while 
 
 Here is what we achieved:
 
-<a href="http://www.youtube.com/embed/-TFE6RZwnA4?rel=0" target="_blank">![ScreenShot](http://img.youtube.com/vi/-TFE6RZwnA4/0.jpg)</a>
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/pullToRefreshAnimation.gif)
 
 After having a look into the existing code base of the libraries mentioned above, I got a good understanding of how it works. I stated out by just using a simple onTouchListener and a header view on a list view. One big problem with that approach was that the list view did intercept certain events. For instance clickable views inside the list would not let the down event go through when starting the pull to refresh on them.
 
