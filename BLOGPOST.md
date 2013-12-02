@@ -1,20 +1,21 @@
 # Android pull to refresh animation
-In a recent project we wanted to do a fancy pull to refresh animation and I was faced with the problem of how to implement it. After coming up with a solution I thought it might be worth sharing this.
+We recently did the Movember android app and we wanted to do a fancy pull to refresh animation. The idea was to have a snake being stretched when you pull down the list. After coming up with a solution I thought it might be worth sharing it as a little library.
 
-Most of the time there a pretty good and customisable solutions around, but this time it seemed like all the pull to refresh libraries out there were not sufficient for our needs.
+Most of the time there are pretty good and customisable solutions around, but this time it seemed like all the pull to refresh libraries out there were not sufficient for our needs.
 I had a look at a few libraries, for example https://github.com/chrisbanes/Android-PullToRefresh and https://github.com/johannilsson/android-pulltorefresh
+most of them had one animation build in which wasn't easy to replace.
 
-It was important to use to navigate back and forth through they keyframes while pulling down and pushing back up the list.
+It was important for us to be able to navigate back and forth through they keyframes in the animation. So if you pull down the list and the then push it back up it should actually animate back.
 
 Here is what we achieved:
 
-![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/pullToRefreshAnimation.gif)
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/movember_pulltorefresh.gif)
 
-After having a look into the existing code base of the libraries mentioned above, I got a good understanding of how it works. I stated out by just using a simple onTouchListener and a header view on a list view. One big problem with that approach was that the list view did intercept certain events. For instance clickable views inside the list would not let the down event go through when starting the pull to refresh on them.
+After having a look into the existing code base of the libraries mentioned above, I got a good understanding of how they work. I started out by just using a simple onTouchListener using **setOnTouchListener** and a header view on the list view. One big problem with that approach was that the list view did intercept certain events. For instance clickable views inside the list rows would intercept the motion events if you just have a touch listener on the list view.
 
-So the final approach was to extend the ListView and overwrite the onInterceptTouchEvent of the list view like this:
+So the final approach was to extend the ListView and overwrite the onInterceptTouchEvent of the list view, so we would have all the power of the view group.
 
-	@Override
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 	        if (this.mPullToRefreshAnimation != null) {
             switch (event.getAction()) {
@@ -36,7 +37,7 @@ So the final approach was to extend the ListView and overwrite the onInterceptTo
 On **onInterceptTouchEvent** we initiate the pull to refresh, but only if the first visible item position is **0**.
 If so we want to intercept the **ACTION_DOWN** event. As we move the list up and down we want go through the keyframes without scrolling the list. This is  achieved by the overwriting **onTouch** which will return true to intercept events when we are doing a pull to refresh.
 
-To display the correct keyframe we need to calculate the range we want to animate in and divide it into equal parts for which we set a certain keyframe. ALl done in the PullToRefreshAnimation class, which should be fairly easy to extend and modify as you can see in the sample project.
+To display the correct keyframe we need to calculate the range we want to animate in and divide it into equal parts for which we set a certain keyframe. All is done in the PullToRefreshAnimation class, which should be fairly easy to extend and modify as you can see in the sample project.
 
 	int image_index = (int) ((mTotalDistance - getAnimationStart() - getMarginStart()) / range);
 	int chosen_index = image_index;
@@ -45,12 +46,16 @@ To display the correct keyframe we need to calculate the range we want to animat
         setAnimationForFrame(mCurrentIndex);
    	}
 
-I created a sample project which demonstrates a keyframe animation of the android figure below, the pull to refresh functionality is extracted into a library project. [http://github.com:jtribe/AndroidPullToRefresh.git](http://github.com:jtribe/AndroidPullToRefresh.git)
+I created a [sample project](https://github.com/jtribe/AndroidPullToRefresh/tree/master/PullToRefresh) which demonstrates a keyframe animation of the android figure below, the pull to refresh functionality is extracted into a library project.[http://github.com:jtribe/AndroidPullToRefresh.git](http://github.com:jtribe/AndroidPullToRefresh.git)
 
-![image](http://phandroid.s3.amazonaws.com/wp-content/uploads/2010/06/android-robot-logo.jpg)
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/PullToRefresh/res/drawable-xhdpi/android_anim_0.png)
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/PullToRefresh/res/drawable-xhdpi/android_anim_30.png)
+)
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/PullToRefresh/res/drawable-xhdpi/android_anim_40.png)
+![image](https://raw.github.com/jtribe/AndroidPullToRefresh/master/PullToRefresh/res/drawable-xhdpi/android_anim_54.png)
 
-I used sync studio to animate the android vector graphic image [www.synfig.org](www.synfig.org). The user interface isn't very intuitive but its easy to get started. You can find my .sifz file in the sample project assets folder.
+I used sync studio to create a key frame animation of the android vector graphic image [www.synfig.org](www.synfig.org). The user interface of that tool isn't very intuitive, but its easy to get started. You can find my .sifz file in the sample project assets folder.
 
-Check it out on github, feel free to fork it and send pull requests. [http://github.com:jtribe/AndroidPullToRefresh.git](http://github.com:jtribe/AndroidPullToRefresh.git)
+Checkout the project on github, feel free to fork it and send pull requests. [http://github.com:jtribe/AndroidPullToRefresh.git](http://github.com:jtribe/AndroidPullToRefresh.git)
 
-Or shoot me a email @ tobias@jtribe.com.au or follow me @tosa or on google plus [https://plus.google.com/107803874078363531654/posts](https://plus.google.com/107803874078363531654/posts)
+Or shoot me an email at tobias@jtribe.com.au or via [@tosa](https://twitter.com/intent/user?screen_name=tosa) or on [google plus](https://www.google.com/+TobiasS)
