@@ -20,7 +20,7 @@ public abstract class PullToRefreshAnimation {
     protected final ImageView mAnimationView;
     protected final Context mContext;
     protected final PullToRefreshCallback mRefreshCallback;
-    private final float mDensityFactor;
+    protected final float mDensityFactor;
 
     protected int mCurrentIndex;
     protected PullToRefreshAnimationCallback mAnimationCallback;
@@ -81,7 +81,7 @@ public abstract class PullToRefreshAnimation {
     }
 
     public boolean onDownIntercept(MotionEvent event) {
-        boolean intercept = false;
+
         mTotalDistance = 0;
         if (mAnimationCallback.getFirstVisiblePosition() == 0) {
             mPreviousY = event.getY();
@@ -91,15 +91,15 @@ public abstract class PullToRefreshAnimation {
         }
         // Remember where have we started
         mScrollStartY = event.getY();
-        return intercept;
+        return false;
     }
 
     public boolean onMoveIntercept(MotionEvent event) {
-    	float yMovment = event.getY() - mPreviousY;
-    	float xMovment = event.getX() - mPreviousX;
+    	float yMovement = event.getY() - mPreviousY;
+    	float xMovement = event.getX() - mPreviousX;
         if ((mPreviousY != -1
                 && mAnimationCallback.getFirstVisiblePosition() == 0 &&
-                		event.getY() - mScrollStartY > IDLE_DISTANCE) && Math.abs(yMovment) > Math.abs(xMovment)) {
+                		event.getY() - mScrollStartY > IDLE_DISTANCE) && Math.abs(yMovement) > Math.abs(xMovement)) {
             return true; // intercept this so we can do the animation
         }
         return false;
@@ -130,20 +130,17 @@ public abstract class PullToRefreshAnimation {
                     float distanceToAnimateIn = getAnimationEndHeight() - getAnimationHeight();
                     float range = distanceToAnimateIn
                             / getAnimationFrames();
-
-                    int image_index = (int) ((mTotalDistance - distanceToAnimateIn) / range);
-                    int chosen_index = image_index;
-
-                    if (image_index >= 0
-                            && image_index < getAnimationFrames()) {
-                        mCurrentIndex = chosen_index;
+                    int imageIndex = (int) ((mTotalDistance - distanceToAnimateIn) / range);
+                    if (imageIndex >= 0
+                            && imageIndex < getAnimationFrames()) {
+                        mCurrentIndex = imageIndex;
                         setAnimationForFrame(mCurrentIndex);
-                    } else if (image_index > 0) {
+                    } else if (imageIndex > 0) {
                         setAnimationForFrame(getAnimationFrames() - 1);
                     } else {
                         setAnimationForFrame(0);
                     }
-                    if (chosen_index > getAnimationFrames() * 0.75
+                    if (imageIndex > getAnimationFrames() * 0.75
                             && state != State.REFRESHING) {
                         state = State.RELEASE_TO_REFRESH;
                     } else {
